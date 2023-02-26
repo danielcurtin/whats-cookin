@@ -38,8 +38,17 @@ main.addEventListener('keydown', event => {
     };
 });
 
-navBar.addEventListener('click', toggleView);
+main.addEventListener('keyup', event => {
+    if (event.code === "Enter" || event.code === "Space") {
+        handleCardEvents(event);
+        setTimeout(() => {
+            setFocus(event);
+        }, 100);
+    };
+});
 
+
+navBar.addEventListener('click', toggleView);
 searchBar.addEventListener('keydown', event => {
     if (event.code === "Enter") {
         searchRecipes(searchBar.value);
