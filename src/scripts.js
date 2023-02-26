@@ -21,8 +21,8 @@ Promise.all(apiCalls)
     const ingredientsData = values[1].ingredients;
     const recipeData = values[2].recipes;
     user = new User(usersData[0]);
-    const userRecipeRepo = new RecipeRepository(usersData[0].recipesToCook, ingredientsData)
-    user.recipesToCook = userRecipeRepo
+    const userRecipeRepo = new RecipeRepository(usersData[0].recipesToCook, ingredientsData);
+    user.recipesToCook = userRecipeRepo;
     mainRepository = new RecipeRepository(recipeData, ingredientsData);
     displayCards(mainRepository);
     buttonIndicateCurrentPage();
@@ -48,7 +48,6 @@ main.addEventListener('keyup', event => {
     };
 });
 
-
 navBar.addEventListener('click', toggleView);
 searchBar.addEventListener('keydown', event => {
     if (event.code === "Enter") {
@@ -58,8 +57,6 @@ searchBar.addEventListener('keydown', event => {
         resetWarning();
     };
 });
-
-
 
 footer.addEventListener('click', event => {
     if (event.target.type === "checkbox") {
@@ -85,12 +82,12 @@ function handleCardEvents(event) {
     } else if (event.target.classList.contains('saveBtn')) {
         toggleRecipeSaved(event.target);
     } else if (event.target.classList.contains('noteButtonGrab')) {
-        const notesSection = document.getElementById(`notes${event.target.dataset.index}`)
-        show(notesSection)
+        const notesSection = document.getElementById(`notes${event.target.dataset.index}`);
+        show(notesSection);
     } else if (event.target.classList.contains('submit')) {
-        addNote(event.target.dataset.index)
+        addNote(event.target.dataset.index);
     } else if (event.target.classList.contains('closeNotes')) {
-        const notesSection = document.getElementById(`notes${event.target.dataset.index}`)
+        const notesSection = document.getElementById(`notes${event.target.dataset.index}`);
         hide(notesSection);
     }
 };
@@ -184,11 +181,10 @@ function displayCards(recipeList) {
 };
 
 function addNote(id) {
-    const noteInput = document.getElementById(`note-input${id}`).value
-    let noteContent = document.getElementById(`note-content${id}`)
-    noteContent.innerText = noteInput
-}
-
+    const noteInput = document.getElementById(`note-input${id}`).value;
+    let noteContent = document.getElementById(`note-content${id}`);
+    noteContent.innerText = noteInput;
+};
 
 function toggleSavedButton(element) {
     if (element.children[0]) {
@@ -207,7 +203,6 @@ function toggleSavedButton(element) {
         };
     };
 };
-
 
 function toggleRecipeSaved(element) {
     toggleSavedButton(element);
@@ -292,7 +287,7 @@ function buttonIndicateCurrentPage() {
         myFoodButton.style.backgroundColor = '#548c2f';
         myFoodButton.style.color = 'white';
     }
-}
+};
 
 function setFocus(event) {
     document.getElementById(event.target.id).focus();
