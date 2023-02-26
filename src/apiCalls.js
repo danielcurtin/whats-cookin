@@ -16,10 +16,10 @@ const recData = fetch('http://localhost:3001/api/v1/recipes')
 apiCalls = [userData, ingData, recData]
 
 
-function saveFavorites(myRecipe, myUser) {
+function saveFavorites(recipe, user) {
     fetch('http://localhost:3001/api/v1/usersRecipes', {
         method: 'POST',
-        body: JSON.stringify({ userID: myUser.id, recipeID: myRecipe }),
+        body: JSON.stringify({ userID: user.id, recipeID: recipe }),
         headers: {
             'Content-Type': 'application/json'
         }
