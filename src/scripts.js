@@ -82,8 +82,7 @@ function handleCardEvents(event) {
     } else if (event.target.classList.contains('saveBtn')) {
         toggleRecipeSaved(event.target);
     } else if (event.target.classList.contains('noteButtonGrab')) {
-        const notesSection = document.getElementById(`notes${event.target.dataset.index}`);
-        show(notesSection);
+        showNotes(event.target.dataset.index);
     } else if (event.target.classList.contains('submit')) {
         addNote(event.target.dataset.index);
     } else if (event.target.classList.contains('closeNotes')) {
@@ -184,6 +183,17 @@ function addNote(id) {
     const noteInput = document.getElementById(`note-input${id}`).value;
     let noteContent = document.getElementById(`note-content${id}`);
     noteContent.innerText = noteInput;
+   
+    let notedRecipe = user.recipesToCook.recipes.find(recipe => recipe.id === parseInt(id));
+    notedRecipe.notes = noteInput;
+};
+
+function showNotes(id) {
+    let noteContent = document.getElementById(`note-content${id}`);
+    noteContent.innerText = user.recipesToCook.recipes.find(recipe => recipe.id === parseInt(id)).notes;
+    
+    const notesSection = document.getElementById(`notes${id}`);
+    show(notesSection);
 };
 
 function toggleSavedButton(element) {
