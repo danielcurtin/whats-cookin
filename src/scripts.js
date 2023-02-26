@@ -12,6 +12,7 @@ const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 const homeButton = document.querySelector('#home-button');
 const myFoodButton = document.querySelector('#my-food-button');
 
+
 let user, mainRepository;
 
 Promise.all(apiCalls)
@@ -58,6 +59,8 @@ searchBar.addEventListener('keydown', event => {
     };
 });
 
+
+
 footer.addEventListener('click', event => {
     if (event.target.type === "checkbox") {
         event.target.checked ? filterRecipes(event.target.dataset.tag) : resetFilters();
@@ -81,7 +84,15 @@ function handleCardEvents(event) {
         event.target.dataset.side === 'front' ? flipCard(event.target.dataset.index) : flipCard(event.target.dataset.index);
     } else if (event.target.classList.contains('saveBtn')) {
         toggleRecipeSaved(event.target);
-    };
+    } else if (event.target.classList.contains('noteButtonGrab')) {
+        const notesSection = document.getElementById(`notes${event.target.dataset.index}`)
+        show(notesSection)
+    } else if (event.target.classList.contains('submit')) {
+        addNote(event.target.dataset.index)
+    } else if (event.target.classList.contains('closeNotes')) {
+        const notesSection = document.getElementById(`notes${event.target.dataset.index}`)
+        hide(notesSection);
+    }
 };
 
 function toggleView(event) {
@@ -129,18 +140,18 @@ function displayCards(recipeList) {
     cardSection.innerHTML = '';
     displayRecipes.forEach((recipe, index) => {
         let instructions = recipe.instructions.map((instruction) => {
-            return `<p class="foodText">${instruction.instruction}</p>`;
+            return `<p class="foodText" data-side="back" data-index="${recipe.id}">${instruction.instruction}</p>`;
         });
         let ingredients = recipe.ingredients.map((ingredient) => {
-            return `<li>${ingredient.name}</li>`;
+            return `<li data-side="back" data-index="${recipe.id}">${ingredient.name}</li>`;
         });
         cardSection.innerHTML += `
         <section class="card cardFront" id="cf${recipe.id}" tabindex="0" data-side="front" data-index="${recipe.id}">
           <button aria-label="Save Recipe Button" class="saveRecipeButton saveBtn cardButton" id="save-btn-${index}" data-index="${recipe.id}">
             <i class="fa-solid fa-heart cardButton saveBtn" data-index="${recipe.id}"></i>
           </button>
-          <button aria-label="Write Notes Button" class="notesButton" id="notes-btn-${index}" data-index="${recipe.id}">
-            <i class="fa-solid fa-comment"></i>
+          <button aria-label="Write Notes Button" class="notesButton noteButtonGrab" id="notes-btn-${index}" data-index="${recipe.id}">
+            <i class="fa-solid fa-comment noteButtonGrab" data-index="${recipe.id}"></i>
           </button>
           <img class="foodImage" src="${recipe.image}" alt="Picture of ${recipe.name}" data-side="front" data-index="${recipe.id}">
             <h2 class="foodTitle" data-side="front" data-index="${recipe.id}">${recipe.name}</h2>
@@ -150,17 +161,34 @@ function displayCards(recipeList) {
             </div>
         </section>
         <section class="card cardBack hidden" id="cb${recipe.id}" tabindex="0" data-side="back" data-index="${recipe.id}">
-          <h2 class="foodTitle">${recipe.name}</h2>
+          <h2 class="foodTitle" data-side="back" data-index="${recipe.id}">${recipe.name}</h2>
           <ul class="ingredientsList">
             ${ingredients.join("")}
           </ul>
           ${instructions.join("")}
+        </section>
+        <section class="recipe-notes hidden" id="notes${recipe.id}">
+          <div class="notes">
+            <button class="closeNotes fa-regular fa-circle-xmark" data-index="${recipe.id}"></button>
+            <p class="foodTitle">${recipe.name} Notes</p>
+            <input type="text" class="notesInput" id="note-input${recipe.id}"></input>
+            <label class="visuallyHidden" for="note-input${recipe.id}">Notes input</label>
+            <button class="submit" data-index="${recipe.id}">Submit</button>
+            <p class="notes-list" id="note-content${recipe.id}">notes</p>
+          </div>
         </section>
         `
     });
     fixSavedHearts();
     toggleNotesButtons();
 };
+
+function addNote(id) {
+    const noteInput = document.getElementById(`note-input${id}`).value
+    let noteContent = document.getElementById(`note-content${id}`)
+    noteContent.innerText = noteInput
+}
+
 
 function toggleSavedButton(element) {
     if (element.children[0]) {
