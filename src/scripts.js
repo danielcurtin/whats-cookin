@@ -143,12 +143,12 @@ function displayCards(recipeList) {
         });
         cardSection.innerHTML += `
         <section class="card cardFront" id="cf${recipe.id}" tabindex="0" data-side="front" data-index="${recipe.id}">
-          <button aria-label="Save Recipe Button" class="saveRecipeButton saveBtn cardButton" id="save-btn-${index}" data-index="${recipe.id}">
-            <i class="fa-solid fa-heart cardButton saveBtn" data-index="${recipe.id}"></i>
-          </button>
-          <button aria-label="Write Notes Button" class="notesButton noteButtonGrab" id="notes-btn-${index}" data-index="${recipe.id}">
+        <button aria-label="Write Notes Button" class="notesButton noteButtonGrab" id="notes-btn-${index}" data-index="${recipe.id}">
             <i class="fa-solid fa-comment noteButtonGrab" data-index="${recipe.id}"></i>
-          </button>
+        </button>
+        <button aria-label="Save Recipe Button" class="saveRecipeButton saveBtn cardButton" id="save-btn-${index}" data-index="${recipe.id}">
+          <i class="fa-solid fa-heart cardButton saveBtn" data-index="${recipe.id}"></i>
+        </button>
           <img class="foodImage" src="${recipe.image}" alt="Picture of ${recipe.name}" data-side="front" data-index="${recipe.id}">
             <h2 class="foodTitle" data-side="front" data-index="${recipe.id}">${recipe.name}</h2>
             <div class="frontStats">
@@ -165,8 +165,8 @@ function displayCards(recipeList) {
         </section>
         <section class="recipe-notes hidden" id="notes${recipe.id}">
           <div class="notes">
-            <button class="closeNotes fa-regular fa-circle-xmark" data-index="${recipe.id}"></button>
-            <p class="foodTitle">${recipe.name} Notes</p>
+            <button aria-label="close notes button" class="closeNotes fa-regular fa-circle-xmark" data-index="${recipe.id}"></button>
+            <h2 class="foodTitle">${recipe.name} Notes</p>
             <input type="text" class="notesInput" id="note-input${recipe.id}"></input>
             <label class="visuallyHidden" for="note-input${recipe.id}">Notes input</label>
             <button class="submit" data-index="${recipe.id}">Submit</button>
@@ -287,15 +287,11 @@ function uncheckOtherFilters(tag) {
 
 function buttonIndicateCurrentPage() {
     if(checkPage()) {
-        homeButton.style.backgroundColor = '#548c2f';
-        homeButton.style.color = 'white';
+        homeButton.style.backgroundColor = '#f39584';
         myFoodButton.style.backgroundColor = 'white';
-        myFoodButton.style.color = '#5f4a48';
     } else {
         homeButton.style.backgroundColor = 'white';
-        homeButton.style.color = '#5f4a48';
-        myFoodButton.style.backgroundColor = '#548c2f';
-        myFoodButton.style.color = 'white';
+        myFoodButton.style.backgroundColor = '#f39584';
     }
 };
 
