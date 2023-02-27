@@ -167,7 +167,7 @@ function displayCards(recipeList) {
           <div class="notes">
             <button aria-label="close notes button" class="closeNotes fa-regular fa-circle-xmark" data-index="${recipe.id}"></button>
             <h2 class="foodTitle">${recipe.name} Notes</p>
-            <input type="text" class="notesInput" id="note-input${recipe.id}"></input>
+            <input type="text" class="notesInput" id="note-input${recipe.id}" placeholder="ex: bake cookies at a higher temperature"></input>
             <label class="visuallyHidden" for="note-input${recipe.id}">Notes input</label>
             <button class="submit" data-index="${recipe.id}">Submit</button>
             <p class="notes-list" id="note-content${recipe.id}">notes</p>
